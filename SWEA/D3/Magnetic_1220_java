@@ -1,0 +1,42 @@
+package supplement.day03;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class SWEA_1220_Magnetic {
+
+	
+	public static void main(String[] args) throws Exception{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		for(int t = 1; t <= 10; t++) {
+			int N = Integer.parseInt(br.readLine());
+			int[][] arr = new int[N][N];
+			int sum = 0;
+			
+			// 초기화
+			for(int i = 0; i < N; i++) {
+				StringTokenizer st = new StringTokenizer(br.readLine());
+				for(int j = 0; j < N; j++) {
+					arr[i][j] = Integer.parseInt(st.nextToken());
+				}
+			}
+			
+			for(int i = 0; i < N; i++) {
+				boolean isChecked = false;
+				for(int j = 0; j < N; j++) {
+					if(arr[j][i] == 0) continue;
+					if(arr[j][i] == 1) isChecked = true;
+					if(arr[j][i] == 2 && isChecked) {
+						sum++;
+						isChecked = false;
+					}
+				}
+			}
+			
+			System.out.println("#" + t + " " + sum);
+			
+		}
+	}
+
+}
