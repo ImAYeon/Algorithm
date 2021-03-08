@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class BOJ_2667_단지번호붙이기 {
+public class BOJ_단지번호붙이기_2667 {
 	
 	static int[] dx = {0, 0, -1, 1}; // 상 하 좌 우
 	static int[] dy = {-1, 1, 0, 0};
