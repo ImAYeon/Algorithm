@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class SWEA_길찾기_1219 {
+public class SWEA_길찾기_1219_BFS {
 
 	static int N;
 	static int[][] Node;
