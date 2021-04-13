@@ -1,0 +1,160 @@
+package swtest;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class SWEA_활주로건설_4014 {
+	
+	static int T, N, X, ans;
+	static int[][] map;
+	static boolean[] install;
+	
+	public static void main(String[] args) throws Exception{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st;
+		
+		T = Integer.parseInt(br.readLine());
+		for(int tc = 1; tc <= T; tc++) {
+			st = new StringTokenizer(br.readLine());
+			N = Integer.parseInt(st.nextToken());
+			X = Integer.parseInt(st.nextToken());
+			map = new int[N][N];
+			
+			for(int i = 0; i < N; i++) {
+				st = new StringTokenizer(br.readLine());
+				for(int j = 0; j < N; j++) {
+					map[i][j] = Integer.parseInt(st.nextToken());
+				}
+			}
+			
+			ans = 0;
+			install = new boolean[N];
+			
+			for(int i = 0; i < N; i++) {
+				int cnt = 1;
+				boolean isPossible = true;
+				Arrays.fill(install, false);
+				
+				for(int j = 1; j < N; j++) {
+					if(map[i][j] == map[i][j-1]) {
+						cnt++;
+					}
+					else {
+						if(map[i][j] - map[i][j-1] == 1) { // ex) 2에서 3으로 넘어가는 순간
+							if(cnt < X) { // 경사로를 설치할 길이가 부족한지 체크
+								isPossible = false;
+								break;
+							}
+							for(int k = 1; k <= X; k++) { // 이미 설치한곳과 겹치는 곳 있는지 확인
+								if(install[j-k] == true) {
+									isPossible = false;
+									break;
+								}
+							}
+							if(!isPossible) break;
+							
+//							// 경사로 설치 => 안해두되는게 어차피 쭉 다음방향을 진행하기 때문에 이전에 설치한 경사로는 다시 겹칠일 없음
+//							for(int k = 1; k <= X; k++) { // 설치한곳 표시
+//								install[i][j-k] = true;
+//							}
+							cnt = 1; // 그다음부터 다시 숫자세야함
+							
+						}else if(map[i][j-1] - map[i][j] == 1) { // ex) 3에서 2로 넘어가는 순간
+							isPossible = check(i, j, 'r');
+							if(isPossible == false) break;
+							j += X-1; //-1해주는 이유는 j++할거기 때문
+						}else { // 이전과 높이가 같지 않으면서 높이차이가 1이 아니라면 활주로 건설 불가능
+							isPossible = false;
+							break;
+						}
+					}
+				}
+				if(cnt == N) {
+					ans++; // 모든 높이가 같다는 뜻
+					continue;
+				}
+				if(isPossible) ans++;
+			}
+
+			for(int j = 0; j < N; j++) {
+				int cnt =  1;
+				boolean isPossible = true;
+				Arrays.fill(install, false);
+				
+				for(int i = 1; i < N; i++) {
+					if(map[i][j] == map[i-1][j]) {
+						cnt++;
+					}
+					else {
+						if(map[i][j] - map[i-1][j] == 1) { // ex) 2에서 3으로 넘어가는 순간
+							if(cnt < X) { // 경사로를 설치할 길이가 부족한지 체크
+								isPossible = false;
+								break;
+							}
+							for(int k = 1; k <= X; k++) { // 이미 설치한곳과 겹치는 곳 있는지 확인
+								if(install[i-k] == true) { // 위에서 경사로 설치할 길이가 부족한지 체크하기 때문에 배열 인덱스 벗어날 걱정 x
+									isPossible = false;
+									break;
+								}
+							}
+							if(!isPossible) break;
+							
+//							// 경사로 설치 => 안해두되는게 어차피 쭉 다음방향을 진행하기 때문에 이전에 설치한 경사로는 다시 겹칠일 없음
+//							for(int k = 1; k <= X; k++) { // 설치한곳 표시
+//								install[i][j-k] = true;
+//							}
+							cnt = 1; // 그다음부터 다시 숫자세야함
+							
+						}else if(map[i-1][j] - map[i][j] == 1) { // ex) 3에서 2로 넘어가는 순간
+							isPossible = check(i, j, 'c');
+							if(isPossible == false) break;
+							i += X-1; //-1해주는 이유는 j++할거기 때문
+						}else { // 이전과 높이가 같지 않으면서 높이차이가 1이 아니라면 활주로 건설 불가능
+							isPossible = false;
+							break;
+						}
+					}
+				}
+				if(cnt == N) {
+					ans++; // 모든 높이가 같다는 뜻
+					continue;
+				}
+				if(isPossible) ans++;
+			}
+			
+			System.out.println("#" + tc + " " + ans);
+		}
+
+	}
+	
+	static boolean check(int y, int x, char type) { // 행체크 : type = 'r' , 열체크 : type = 'c' 
+		
+		if(type == 'r') {
+			
+			for(int k = 1; k < X; k++) {
+				if(x+k >= N) return false; 
+				if(map[y][x + k] != map[y][x]) return false;
+			}
+			
+			for(int k = 0; k < X; k++) { // 설치한곳 표시
+				install[x+k] = true;
+			}
+		}else if(type == 'c') {
+
+			for(int k = 1; k < X; k++) {
+				if(y+k >= N) return false; 
+				if(map[y + k][x] != map[y][x]) return false;
+			}
+
+			for(int k = 0; k < X; k++) { // 설치한곳 표시
+				install[y+k] = true;
+			}
+			
+		}
+		
+		return true;
+	}
+
+}
