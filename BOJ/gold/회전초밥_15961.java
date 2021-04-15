@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
 // D = 8 / K = 4
 // 7] 9 7 30 2 [7 9 25
 
-public class BOJ_회전초밥_15961 {
+public class BOJ_회전초밥_15961 { // BOJ_회전초밥_2531과 같은 
 	
 	static int N, D, K, C, max, n;
 	static int[] arr, cnt;
