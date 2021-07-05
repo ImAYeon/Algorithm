@@ -25,6 +25,7 @@ public class SWEA_시각덧셈_1976 {
 				min -= 60;
 			}
 			hour += (hour1 + hour2) % 12;
+			if(hour == 0) hour = 12;
 			
 			System.out.println("#" + tc + " " + hour + " " + min);
 		}
