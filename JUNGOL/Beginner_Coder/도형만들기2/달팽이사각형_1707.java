@@ -1,7 +1,5 @@
 package 도형만들기2;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class JUNGOL_달팽이사각형_1707 {
