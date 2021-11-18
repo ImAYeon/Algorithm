@@ -28,6 +28,7 @@ public class BOJ_수찾기_1920 {
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < M; i++) {
 			sb.append( binarySearch(n,m[i]) ).append("\n");
+			// sb.append( Arrays.binarySearch(n,m[i])<0 ? 0 : 1 ).append("\n"); // 라이브러리 사용 가능
 		}
 		System.out.println(sb.toString());
 	}
